@@ -5,8 +5,12 @@ const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const _ = require("lodash");
 const mongoose = require("mongoose");
-const { result } = require("lodash");
-const { response } = require("express");
+const {
+  result
+} = require("lodash");
+const {
+  response
+} = require("express");
 
 
 const homeStartingContent = "Lacus vel facilisis volutpat est velit egestas dui id ornare. Semper auctor neque vitae tempus quam. Sit amet cursus sit amet dictum sit amet justo. Viverra tellus in hac habitasse. Imperdiet proin fermentum leo vel orci porta. Donec ultrices tincidunt arcu non sodales neque sodales ut. Mattis molestie a iaculis at erat pellentesque adipiscing. Magnis dis parturient montes nascetur ridiculus mus mauris vitae ultricies. Adipiscing elit ut aliquam purus sit amet luctus venenatis lectus. Ultrices vitae auctor eu augue ut lectus arcu bibendum at. Odio euismod lacinia at quis risus sed vulputate odio ut. Cursus mattis molestie a iaculis at erat pellentesque adipiscing.";
@@ -19,8 +23,8 @@ app.set('view engine', 'ejs');
 
 // set connection and/or new DB
 mongoose.connect("mongodb://localhost:27017/blogDB", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
+  useNewUrlParser: true,
+  useUnifiedTopology: true
 });
 
 // Schema and Model
@@ -39,7 +43,7 @@ app.use(express.static("public"));
 
 
 app.get("/", function (req, res) {
-  Post.find({}, function(err, blogPosts) {
+  Post.find({}, function (err, blogPosts) {
     res.render("home", {
       startingContent: homeStartingContent,
       posts: blogPosts
@@ -64,30 +68,40 @@ app.get("/compose", function (req, res) {
 });
 
 app.post("/compose", function (req, res) {
-
-  // if content doesn't exsis create new post else add
   const post = new Post({
     title: req.body.postTitle,
     content: req.body.postBody
-  })
+  });
 
-  post.save(function(err) {
-    if (!err) {
-      res.redirect("/");
+  // if content doesn't exsis create new post else add your post
+  Post.exists({
+    content: post.content
+  }, function (err, result) {
+    if (result) {
+      console.log("There is another post like this!");
+      res.redirect("/compose");
+    } else {
+      post.save(function (err) {
+        if (!err) {
+          res.redirect("/");
+        }
+      });
     }
   });
-});
+})
 
 app.get("/posts/:postId", function (req, res) {
   const requestedPostId = req.params.postId;
 
-  Post.findOne({_id: requestedPostId}, function(err,post){
-    if(err) {
+  Post.findOne({
+    _id: requestedPostId
+  }, function (err, post) {
+    if (err) {
       console.log(err);
     } else {
       res.render("post", {
         title: post.title,
-        content : post.content
+        content: post.content
       })
     }
   })
