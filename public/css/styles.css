@@ -1,8 +1,11 @@
+<<<<<<< HEAD
 html {
   min-height: 100%;
   position: relative;
 }
 
+=======
+>>>>>>> 22f42cbd5fc1609539792b8f62af56e176e7055e
 .container-fluid {
     padding-top: 70px;
     padding-bottom: 70px;
@@ -36,5 +39,9 @@ html {
 .footer p {
 	margin-top: 25px;
 	font-size: 12px;
+<<<<<<< HEAD
   color: #fff;
+=======
+    color: #fff;
+>>>>>>> 22f42cbd5fc1609539792b8f62af56e176e7055e
 }
