@@ -34,7 +34,7 @@ try {
 } catch (error) {
   console.log(error);
 } finally {
-  console.log(`Connected to ${process.env.DB_USER}`);
+  console.log("Connected");
 }
 
 
@@ -116,8 +116,6 @@ app.get("/posts/:postId", function (req, res) {
   })
 });
 
-
-
-app.listen(process.env.PORT || 5000, function() {
-  console.log("Server started on port 3000");
+app.listen(process.env.PORT, function() {
+  console.log(`Server start at ${process.env.PORT}`);
 });
