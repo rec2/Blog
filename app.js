@@ -1,5 +1,6 @@
 require('dotenv').config();
 //jshint esversion:6
+const PORT = process.env.PORT || '8080';
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
@@ -23,7 +24,7 @@ const app = express();
 app.set('view engine', 'ejs');
 
 // set connection and/or new DB
-
+// mongoose.connect("mongodb://localhost:27017/blogDB");
 try {
   const URL = `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.numyi.gcp.mongodb.net/blogDB?retryWrites=true&w=majority`;
   mongoose.connect(URL, {
@@ -33,7 +34,7 @@ try {
 } catch (error) {
   console.log(error);
 } finally {
-  console.log("Connected");
+  console.log(`Connected to ${process.env.DB_USER}`);
 }
 
 
@@ -53,7 +54,7 @@ app.use(express.static("public"));
 app.get("/", function (req, res) {
   Post.find({}, function (err, blogPosts) {
     res.render("home", {
-      startingContent: homeStartingContent,
+      homeContent: homeStartingContent,
       posts: blogPosts
     });
   });

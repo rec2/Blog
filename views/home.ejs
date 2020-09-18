@@ -1,8 +1,7 @@
-<<<<<<< HEAD
 
 <%- include("partials/header"); -%>
     <h1>Home</h1>
-    <p> <%= startingContent %> </p>
+    <p> <%= homeContent %> </p>
 
 
   <%  posts.forEach(function(post){ %>
@@ -18,24 +17,3 @@
 
 
 <%- include("partials/footer"); -%>
-=======
-<%- include("partials/header") %>
-
-<h1>Home</h1>
-
-<p> <%= homeContent %> </p>
-
-
-<% posts.forEach(post => { %>
- <% let previewBody =  post.entryBody.substring(1,101) + " ..." %> 
-<div>
-    <h2><%= post.entryTitle  %>  </h2>
-    <p> <%= previewBody %> </p>
-    <a href="/post/<%= post.entryTitle %>"  >Read more </a>
-
-</div>
-
-<% }); %>
-
-<%- include("partials/footer") %>
->>>>>>> 22f42cbd5fc1609539792b8f62af56e176e7055e
